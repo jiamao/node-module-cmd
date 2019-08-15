@@ -48,11 +48,13 @@ module.exports = class {
         }
         else if(stat.isFile()) {
             if(this.cache[p]) return this.cache[p];
-
+            // 读取模块代码
             const content = fs.readFileSync(p, 'utf8');
             const modScript = new vm.Script(content, {
                 filename: p
             });
+
+            // 代理模块中的`require` 让它是访问我们缓存中的模块代理
             const self = this;
             const _req = (id, __path) => {
                 return self.require(id, __path);

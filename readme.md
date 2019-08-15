@@ -33,14 +33,15 @@ define('mod/env', function(require, exports, module) {
 ```
 
 ```js
-const cmdLoader = new (require('../index'))();
+const cmd = require('../index');
+const loader = new cmd();
 
 // 加载整个目录
-cmdLoader.load('/data/web/mod');
+loader.load('/data/web/mod');
 // 加载单个模块
-//cmdLoader.load('/data/web/mod/env.js');
+//loader.load('/data/web/mod/env.js');
 
 // 基于id获取模块
-const app = cmdLoader.require('mod/app');
+const app = loader.require('mod/app');
 app.say();
 ```

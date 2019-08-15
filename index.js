@@ -37,7 +37,8 @@ module.exports = class {
     // 加载单个模块文件或目录
     // p 加载的文件或目录
     // env需要指定的一些环境变量
-    load(p, env) {
+    // options 配置，如果有error函数，则出错回调它
+    load(p, env, options) {
         const stat = fs.statSync(p);
         if(stat.isDirectory()) {
             const files = fs.readdirSync(p);
@@ -76,7 +77,10 @@ module.exports = class {
                         if(exp && typeof exp == 'object') mod.exports = exp;
                     }
                     catch(e) {
-                        console.log(e);                        
+                        if(options && options.error) options.error(e);
+                        else {
+                            console.log(e);  
+                        }                      
                     }
                 }
             });  

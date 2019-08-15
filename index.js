@@ -84,7 +84,7 @@ module.exports = class {
                     }
                 }
             });  
-
+            sandbox.define.cmd = {};
             const context = vm.createContext(sandbox);
             modScript.runInContext(context);
 

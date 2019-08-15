@@ -1,6 +1,6 @@
 {
   "name": "module-cmd",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "node 加载 cmd前端模块",
   "main": "index.js",
   "scripts": {

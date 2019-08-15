@@ -8,6 +8,6 @@ loader.load(path.join(__dirname, 'mod')); // load directory
 
 const app = loader.require('mod/app');
 
-//console.log(loader.cache)
+console.log(loader.cache)
 
 console.log(app.say());

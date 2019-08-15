@@ -8,7 +8,7 @@ module.exports = class {
     }
 
     // 代理给模块用的require
-    require(id) {
+    require(id, __path) {
         let mod = this.cache[id];
 		  // 为了保证require一定返回是模块实例，不存在可以先初始化，加载后再重置
 		if(!mod) {
@@ -29,7 +29,8 @@ module.exports = class {
 					}
 					return Reflect.set(target, key, value, receiver);
 				}
-			});
+            });
+            if(__path) this.cache[__path] = mod;
 		}
 		return mod;
     }
@@ -46,13 +47,15 @@ module.exports = class {
             return;
         }
         else if(stat.isFile()) {
+            if(this.cache[p]) return this.cache[p];
+
             const content = fs.readFileSync(p, 'utf8');
             const modScript = new vm.Script(content, {
                 filename: p
             });
             const self = this;
-            const _req = (id) => {
-                return self.require(id);
+            const _req = (id, __path) => {
+                return self.require(id, __path);
             };
             const sandbox = Object.assign(env||{}, {
                 // 定认cmd的define函数，代理
@@ -65,7 +68,7 @@ module.exports = class {
                         fun = deps;
                         deps = null;
                     }
-                    const mod = _req(id);
+                    const mod = _req(id, p);
                     try {
                         const exp = fun(_req, mod.exports, mod);
                         if(exp && typeof exp == 'object') mod.exports = exp;
@@ -78,6 +81,8 @@ module.exports = class {
 
             const context = vm.createContext(sandbox);
             modScript.runInContext(context);
+
+            return this.require(p);
         }
     }
 }

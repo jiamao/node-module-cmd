@@ -66,8 +66,13 @@ module.exports = class {
                         deps = null;
                     }
                     const mod = _req(id);
-                    const exp = fun(_req, mod.exports, mod);
-                    if(exp && typeof exp == 'object') mod.exports = exp;
+                    try {
+                        const exp = fun(_req, mod.exports, mod);
+                        if(exp && typeof exp == 'object') mod.exports = exp;
+                    }
+                    catch(e) {
+                        console.log(e);                        
+                    }
                 }
             });  
 

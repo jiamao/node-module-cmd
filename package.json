@@ -1,0 +1,24 @@
+{
+  "name": "module-cmd",
+  "version": "1.0.0",
+  "description": "node 加载 cmd前端模块",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiamao/node-module-cmd.git"
+  },
+  "keywords": [
+    "node",
+    "cmd",
+    "module"
+  ],
+  "author": "jiamao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jiamao/node-module-cmd/issues"
+  },
+  "homepage": "https://github.com/jiamao/node-module-cmd#readme"
+}

@@ -77,7 +77,7 @@ module.exports = class {
                         if(exp && typeof exp == 'object') mod.exports = exp;
                     }
                     catch(e) {
-                        if(options && options.error) options.error(e);
+                        if(options && options.error) options.error(e, {id: id, path: p});
                         else {
                             console.log(e);  
                         }                      

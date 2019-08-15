@@ -43,7 +43,7 @@ module.exports = class {
         if(stat.isDirectory()) {
             const files = fs.readdirSync(p);
             for(let f of files) {
-                this.load(path.join(p, f), env);
+                this.load(path.join(p, f), env, options);
             }
             return;
         }

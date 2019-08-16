@@ -42,14 +42,14 @@ module.exports = class {
             return new Proxy(obj, {
                 get: function (target, key, receiver) {  
                     // 其它属性的访问都代理到exports下           
-                    if(typeof key == 'string' && key != 'exports') {
+                    if(typeof key == 'string' && key != 'exports' && key != 'sandbox') {
                         return Reflect.get(target['exports'], key, target['exports']);
                     }
                     return Reflect.get(target, key, receiver);
                 },
                 set: function (target, key, value, receiver) {  
                     // 其它属性的访问都代理到exports下           
-                    if(typeof key == 'string' && key != 'exports') {
+                    if(typeof key == 'string' && key != 'exports' && key != 'sandbox') {
                         return Reflect.set(target['exports'], key, value, target['exports']);
                     }
                     return Reflect.set(target, key, value, receiver);
@@ -95,6 +95,7 @@ module.exports = class {
                         deps = null;
                     }
                     const mod = _req(id, p);
+                    mod.sandbox = sandbox;
                     try {
                         const exp = fun(_req, mod.exports, mod);
                         if(exp) {                            

@@ -33,6 +33,7 @@ define('mod/env', function(require, exports, module) {
 })
 ```
 
+使用前端模块
 ```js
 const cmd = require('module-cmd');
 const loader = new cmd();

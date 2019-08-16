@@ -16,6 +16,7 @@ npm install module-cmd --save
 
 # Usage
 
+ 前端cmd模块
 ```js
 // 模块 /data/web/mod/env.js
 define('mod/env', function(require, exports, module) {
@@ -33,7 +34,7 @@ define('mod/env', function(require, exports, module) {
 ```
 
 ```js
-const cmd = require('../index');
+const cmd = require('module-cmd');
 const loader = new cmd();
 
 // 加载整个目录

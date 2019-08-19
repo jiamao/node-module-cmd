@@ -130,7 +130,7 @@ module.exports = class {
         console.log(`load module: ${p}`);
 
         // 如果需要watch，则有修改则重新载入
-        if(options.watch && !sandbox.watcher) {
+        if(options && options.watch && !sandbox.watcher) {
             const self = this;
             sandbox.watcher = fs.watch(p, (eventType, filename) => {
                 if(eventType == 'change') {

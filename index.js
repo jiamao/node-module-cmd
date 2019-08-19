@@ -71,12 +71,7 @@ module.exports = class {
             return;
         }
         else if(stat.isFile()) {
-            if(this.cache[p]) return this.cache[p];
-            // 读取模块代码
-            const content = fs.readFileSync(p, 'utf8');
-            const modScript = new vm.Script(content, {
-                filename: p
-            });
+            if(this.cache[p]) return this.cache[p];            
 
             // 代理模块中的`require` 让它是访问我们缓存中的模块代理
             const self = this;
@@ -117,11 +112,33 @@ module.exports = class {
                     }
                 }
             });  
-            sandbox.define.cmd = {};
-            const context = vm.createContext(sandbox);
-            modScript.runInContext(context);
+            sandbox.define.cmd = {};           
 
-            return this.require(p);
+            return this.loadModule(p, sandbox, options);
         }
+    }
+
+    loadModule(p, sandbox, options) {
+        // 读取模块代码
+        const content = fs.readFileSync(p, 'utf8');
+        const modScript = new vm.Script(content, {
+            filename: p
+        });
+
+        const context = vm.createContext(sandbox);
+        modScript.runInContext(context);
+        console.log(`load module: ${p}`);
+
+        // 如果需要watch，则有修改则重新载入
+        if(options.watch && !sandbox.watcher) {
+            const self = this;
+            sandbox.watcher = fs.watch(p, (eventType, filename) => {
+                if(eventType == 'change') {
+                    console.log(`file change, reload: ${filename}`);
+                    self.loadModule(p, sandbox, options);
+                }
+            });
+        }
+        return this.require(p);
     }
 }

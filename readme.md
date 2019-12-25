@@ -24,7 +24,7 @@ define('mod/env', function(require, exports, module) {
 })
 
 // 模块 /data/web/mod/app.js
-define('mod/env', function(require, exports, module) {
+define('mod/app', function(require, exports, module) {
     const env = require('mod/env');
     
     exports.say = function() {
